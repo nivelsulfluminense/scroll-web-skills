@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10K Stage · demo técnica</title>
+  <meta name="description" content="Demonstração técnica do motor de palco do 10K Unified Web Skill. Não é um site de design: serve para testar o motor e o QA.">
+  <link rel="stylesheet" href="./tk-stage.css">
+  <style>
+    :root {
+      --tk-canvas: #0b0a09; --tk-ink: #f3ece2; --tk-ink-soft: #b3a99c; --tk-accent: #e8643a;
+      --tk-font-display: Georgia, "Times New Roman", serif; --tk-font-text: system-ui, sans-serif;
+    }
+    html { background: var(--tk-canvas); color: var(--tk-ink); font-family: var(--tk-font-text); }
+    body { margin: 0; }
+    h1, h2 { font-family: var(--tk-font-display); font-weight: 400; line-height: 1.02; margin: 0 0 .4em; }
+    h1 { font-size: clamp(2.6rem, 7vw, 6rem); }
+    h2 { font-size: clamp(1.8rem, 4vw, 3.4rem); }
+    p { max-width: 38ch; line-height: 1.5; color: var(--tk-ink-soft); margin: 0 0 1em; }
+    .band { left: 6vw; bottom: 12vh; max-width: min(36rem, 88vw); }
+    .band.trail { left: auto; right: 6vw; text-align: right; }
+    .band.trail p { margin-left: auto; }
+    /* Synthetic test frames are saturated colour bars, so captions sit on a panel. A real film is art-directed
+       with calm areas for type and usually needs only a local scrim (data-tk-scrim). */
+    .band { background: rgb(11 10 9 / .86); padding: 1.6rem 1.8rem; border-radius: 2px; }
+    .band p:last-child { margin-bottom: 0; }
+    .btn { display: inline-block; padding: .9em 1.4em; background: var(--tk-accent); color: #160d08; text-decoration: none; font-weight: 600; border-radius: 2px; }
+    .btn:focus-visible { outline: 3px solid var(--tk-ink); outline-offset: 3px; }
+    .after { min-height: 80vh; padding: 14vh 6vw; }
+  </style>
+</head>
+<body>
+  <main>
+    <section data-tk-stage id="hero" aria-label="Filme de teste sintético" style="--tk-span: 500vh; --tk-span-mobile: 420vh">
+      <div data-tk-pin>
+        <canvas data-tk-canvas aria-hidden="true"></canvas>
+        <img data-tk-poster src="./film/poster.webp" alt="" width="1600" height="900" fetchpriority="high">
+        <div class="band" data-tk-band="0 0.22 0 0.08">
+          <h1>O motor, isolado.</h1>
+          <p>Um filme sintético de 120 quadros, sem nenhuma geração paga, para provar o palco e a auditoria.</p>
+        </div>
+        <div class="band trail" data-tk-band="0.34 0.6">
+          <h2>Pausa com texto.</h2>
+          <p>Entre 0,30 e 0,62 o quadro segura enquanto a legenda entra e sai.</p>
+        </div>
+        <div class="band" data-tk-band="0.78">
+          <h2>Uma ação, um rótulo.</h2>
+          <p><a class="btn" href="#depois">Ver o restante</a></p>
+        </div>
+      </div>
+    </section>
+    <section class="after" id="depois">
+      <h2>Depois do palco</h2>
+      <p>O pin libera aqui sem salto. Em movimento reduzido, o palco vira uma seção comum com o pôster de fundo.</p>
+    </section>
+  </main>
+  <script type="module">
+    import { ScrollStage, framesFromManifest } from "./tk-stage.js";
+    document.documentElement.classList.add("tk-js");
+    const [lg, sm] = await Promise.all(["./film/lg/manifest.json", "./film/sm/manifest.json"].map((u) => fetch(u).then((r) => r.json())));
+    const section = document.querySelector("#hero");
+    new ScrollStage({
+      section,
+      canvas: section.querySelector("canvas"),
+      keys: [[0, 0], [0.3, 70], [0.62, 70], [1, 119]],
+      variants: [
+        { media: "(max-aspect-ratio: 3/4)", frames: framesFromManifest(sm, "./film/sm"), focal: [0.45, 0.5] },
+        { frames: framesFromManifest(lg, "./film/lg") },
+      ],
+    });
+  </script>
+</body>
+</html>

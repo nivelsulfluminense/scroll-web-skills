@@ -1,0 +1,48 @@
+name: qa-audit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  skill-and-engine:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: true                        # film frames and masters live in Git LFS (see references/03-media.md)
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium webkit
+      - run: npm run skill:lint
+      - name: Installer smoke test (temp HOME, every agent, init in each target)
+        run: |
+          export HOME=$(mktemp -d)
+          node bin/cli.mjs install --agent all
+          ! node bin/cli.mjs where --agent all | grep -q BROKEN
+          test -f "$HOME/.claude/skills/10k-unified-web-skill/references/04-engine.md"
+          for t in static react lovable; do d=$(mktemp -d); (cd "$d" && node "$GITHUB_WORKSPACE/bin/cli.mjs" init --target $t); done
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build:engine && git diff --exit-code dist/ && cp dist/tk-stage.js dist/tk-stage.css examples/static-demo/
+      - run: npm run demo:media
+      - name: Audit the static demo in Chromium and WebKit
+        run: |
+          node scripts/serve.mjs examples/static-demo --port 4600 &
+          sleep 1
+          node scripts/qa-audit.ts --url http://127.0.0.1:4600/ --out qa-report --browsers chromium,webkit
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-report
+          path: qa-report
+          retention-days: 14
+
+  # Projects built with this skill copy the job below into their own repo and point --url at
+  # their preview build (or a Lovable/Vercel preview URL passed in as a secret).

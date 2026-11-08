@@ -1,0 +1,71 @@
+{
+  "name": "10k-unified-web-skill",
+  "version": "0.1.0",
+  "description": "Unified agent skill and harness for cinematic scroll-driven websites: brief, story, media, engine, QA and handover.",
+  "bin": {
+    "10k-unified-web-skill": "bin/cli.mjs"
+  },
+  "files": [
+    "bin/",
+    "SKILL.md",
+    "AGENTS.md",
+    "CLAUDE.md",
+    "README.md",
+    "LICENSE",
+    "references/",
+    "templates/",
+    "prompts/",
+    "engine/",
+    "scripts/",
+    "targets/",
+    "dist/tk-stage.js",
+    "dist/tk-stage.css",
+    "docs/DECISIONS.md",
+    "docs/ATTRIBUTION.md",
+    "docs/IMPLEMENTATION_STATUS.md",
+    "examples/static-demo/index.html",
+    "examples/react-demo/index.html",
+    "examples/react-demo/main.tsx",
+    "tsconfig.json",
+    "qa.config.example.json"
+  ],
+  "keywords": [
+    "agent-skill",
+    "claude-code",
+    "scroll",
+    "scrollytelling",
+    "landing-page",
+    "lovable",
+    "supabase"
+  ],
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "doctor": "node scripts/doctor.mjs",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "build:engine": "esbuild engine/core/index.ts --bundle --format=esm --target=es2020 --minify --outfile=dist/tk-stage.js && cp engine/css/stage.css dist/tk-stage.css",
+    "demo:media": "bash scripts/process-media.sh demo examples/static-demo/film",
+    "demo:serve": "node scripts/serve.mjs examples/static-demo --port 4600",
+    "qa": "node scripts/qa-audit.ts",
+    "skill:lint": "node scripts/lint-skill.mjs",
+    "build:react-demo": "esbuild examples/react-demo/main.tsx --bundle --format=esm --jsx=automatic --minify --define:process.env.NODE_ENV='\"production\"' --outfile=examples/react-demo/main.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.0",
+    "@types/pngjs": "^6.0.5",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.3.0",
+    "esbuild": "^0.25.0",
+    "playwright": "^1.63.0",
+    "pngjs": "^7.0.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.3.1",
+    "sharp": "^0.35.5",
+    "typescript": "^5.8.0",
+    "vitest": "^3.2.0"
+  }
+}

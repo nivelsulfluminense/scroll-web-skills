@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>10K Stage · demo React</title>
+  <link rel="stylesheet" href="../static-demo/tk-stage.css">
+  <style>
+    :root {
+      --tk-canvas: #0b0a09; --tk-ink: #f3ece2; --tk-ink-soft: #b3a99c; --tk-accent: #e8643a;
+      --tk-font-display: Georgia, "Times New Roman", serif; --tk-font-text: system-ui, sans-serif;
+    }
+    html { background: var(--tk-canvas); color: var(--tk-ink); font-family: var(--tk-font-text); }
+    body { margin: 0; }
+    h1, h2 { font-family: var(--tk-font-display); font-weight: 400; line-height: 1.02; margin: 0 0 .4em; }
+    h1 { font-size: clamp(2.6rem, 7vw, 6rem); }
+    h2 { font-size: clamp(1.8rem, 4vw, 3.4rem); }
+    p { max-width: 38ch; line-height: 1.5; color: var(--tk-ink-soft); margin: 0 0 1em; }
+    .band { left: 6vw; bottom: 12vh; max-width: min(36rem, 88vw); }
+    .band.trail { left: auto; right: 6vw; text-align: right; }
+    .band.trail p { margin-left: auto; }
+    /* Synthetic test frames are saturated colour bars, so captions sit on a panel. A real film is art-directed
+       with calm areas for type and usually needs only a local scrim (data-tk-scrim). */
+    .band { background: rgb(11 10 9 / .86); padding: 1.6rem 1.8rem; border-radius: 2px; }
+    .band p:last-child, .band .step:last-child { margin-bottom: 0; }
+    .btn { display: inline-block; padding: .9em 1.4em; background: var(--tk-accent); color: #160d08; text-decoration: none; font-weight: 600; border-radius: 2px; }
+    .btn:focus-visible { outline: 3px solid var(--tk-ink); outline-offset: 3px; }
+    .after { min-height: 80vh; padding: 14vh 6vw; }
+  </style>
+
+</head>
+<body>
+  <div id="root"><main><h1>Mesmo motor, em React.</h1><p>Carregando o palco…</p></main></div>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

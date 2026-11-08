@@ -1,0 +1,84 @@
+/*
+ * 10K stage: structural CSS only. Brand look lives in the project's own stylesheet,
+ * driven by the --tk-* tokens below. Do not put colours or fonts in this file.
+ */
+
+[data-tk-stage] {
+  position: relative;
+  height: var(--tk-span, 400vh);        /* scroll length of the stage; set per section */
+}
+
+[data-tk-pin] {
+  position: sticky;                      /* native pinning: no scroll hijacking */
+  top: 0;
+  height: 100vh;
+  height: 100svh;                        /* stable on mobile browsers whose toolbar collapses */
+  overflow: hidden;
+  isolation: isolate;
+}
+
+[data-tk-canvas],
+[data-tk-poster] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+[data-tk-canvas] { z-index: 0; }
+
+/* The poster is the static fallback: visible until the first frame paints, on error, and without JS. */
+[data-tk-poster] { z-index: 1; transition: opacity 0.3s ease; }
+[data-tk-stage][data-tk-status="ready"] [data-tk-poster] { opacity: 0; pointer-events: none; }
+
+[data-tk-band] {
+  position: absolute;
+  z-index: 2;
+  opacity: 0;                            /* the engine animates opacity; nothing else is animated here */
+  will-change: opacity;
+}
+
+/* Scrim only where text sits, never a full-frame overlay. Opt in per band. */
+[data-tk-band][data-tk-scrim]::before {
+  content: "";
+  position: absolute;
+  inset: -2rem -3rem;
+  z-index: -1;
+  background: radial-gradient(closest-side, var(--tk-scrim, rgb(0 0 0 / 0.45)), transparent);
+}
+
+/* ----- Reduced motion, and the no-JS state: the stage becomes an ordinary section. ----- */
+
+[data-tk-stage][data-tk-motion="reduced"],
+html:not(.tk-js) [data-tk-stage] {
+  height: auto;
+}
+
+[data-tk-stage][data-tk-motion="reduced"] [data-tk-pin],
+html:not(.tk-js) [data-tk-pin] {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+  display: grid;
+  align-content: end;
+  gap: var(--tk-reduced-gap, 2rem);
+  padding: var(--tk-reduced-pad, 12vh 6vw);
+}
+
+[data-tk-stage][data-tk-motion="reduced"] [data-tk-band],
+html:not(.tk-js) [data-tk-band] {
+  position: relative;
+  inset: auto;
+  opacity: 1;
+  transform: none;
+}
+
+/* Without JS there is no canvas painting; keep the poster as the backdrop. */
+html:not(.tk-js) [data-tk-canvas] { display: none; }
+
+/* Portrait screens may use a different scroll length (set by the React adapter or by hand). */
+@media (max-aspect-ratio: 3/4) {
+  [data-tk-stage] { height: var(--tk-span-mobile, var(--tk-span, 400vh)); }
+}

@@ -1,0 +1,9 @@
+{
+  "steps": 10,
+  "budgetsMB": { "desktop": 20, "mobile": 8 },
+  "minContrast": 4.5,
+  "minContrastLarge": 3,
+  "minBandVh": 0.5,
+  "deadScrollSteps": 2,
+  "ignoreConsole": []
+}

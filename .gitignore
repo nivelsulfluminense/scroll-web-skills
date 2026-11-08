@@ -1,0 +1,16 @@
+node_modules/
+dist/*
+!dist/tk-stage.js
+!dist/tk-stage.css
+qa-report/
+.10k/tools/
+media/masters/
+media/rejected/
+review/
+.env
+.env.*
+!.env.example
+examples/static-demo/film/
+examples/static-demo/tk-stage.js
+examples/static-demo/tk-stage.css
+examples/react-demo/main.js

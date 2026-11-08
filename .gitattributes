@@ -1,0 +1,7 @@
+# Film assets are large and binary: keep them in Git LFS, never in plain git history.
+*.mp4  filter=lfs diff=lfs merge=lfs -text
+*.mov  filter=lfs diff=lfs merge=lfs -text
+*.webm filter=lfs diff=lfs merge=lfs -text
+media/** filter=lfs diff=lfs merge=lfs -text
+public/film/**/*.webp filter=lfs diff=lfs merge=lfs -text
+*.sh text eol=lf
