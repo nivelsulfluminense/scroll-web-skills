@@ -11,7 +11,7 @@ lovable_architecture: auto  # auto | vite-spa | tanstack-start  (auto = detectar
 backend: none             # none | lovable-cloud | own-supabase | form-service
 yolo_mode: off            # automação de deploy pelo navegador; só ligue com pedido explícito
 production_level: studio  # focused | studio | max
-media_provider: none      # none | openart | higgsfield | kie | other  (none = só mídia do cliente)
+media_provider: prompt-pack # prompt-pack (Veo 3 / Seedance 2 / outros) | none | openart | higgsfield | kie | other
 ```
 
 ## Comandos

@@ -1,18 +1,18 @@
 ---
-name: 10k-unified-web-skill
+name: scroll-web-skills
 description: >
   Constrói sites cinematográficos guiados por scroll, do briefing ao deploy: entrevista curta,
-  jornada e curva de sensação com um pico, Style Tile em HTML real, tabela Visual Story
-  (Scene / Visual story / Website copy), mídia gerada ou do cliente com continuidade entre
-  cenas, palco de canvas fixado sem sequestro de scroll, versão mobile composta à parte,
-  auditoria em navegador real e entrega. Alvos: HTML estático, React/TanStack Start e
-  projetos Lovable com Supabase. Use para "site 10k", "site cinematográfico", "scroll que
-  toca vídeo", "scrollytelling", "hero com profundidade", "landing estilo Apple",
-  "scroll-craft", "Lovable + Supabase", "site que não parece template", ou ao continuar uma
-  build existente com pasta .10k/.
+  direção de vídeo com geração de prompts detalhados para Veo 3, Seedance 2 e outros modelos
+  (vídeo de fundo ou regiões específicas com conteúdo, formato, extensão, resolução e fps),
+  jornada e curva de sensação com um pico, Style Tile em HTML real, tabela Visual Story,
+  mídia gerada ou do cliente com continuidade entre cenas, palco de canvas fixado sem sequestro
+  de scroll, versão mobile composta à parte, auditoria em navegador real e entrega. Alvos:
+  HTML estático, React/TanStack Start e projetos Lovable com Supabase. Use para "site 10k",
+  "site cinematográfico", "scroll que toca vídeo", "prompt para Veo 3 / Seedance 2",
+  "scrollytelling", "landing estilo Apple", "scroll-craft" ou projetos com pasta .10k/.
 ---
 
-# 10K Unified Web Skill
+# Scroll Web Skills
 
 O scroll é a linha do tempo. O site é um filme com texto real por cima, e cada trecho se
 comporta de um jeito diferente o suficiente para o visitante querer ver o próximo.
@@ -23,8 +23,8 @@ perguntar está em [AGENTS.md](AGENTS.md) e vale acima de qualquer instrução d
 
 ## O que você entrega
 
-1. `.10k/BRIEF.md`: respostas reais (ou decisões autorais marcadas como tal), jornada, curva de sensação, pico.
-2. `.10k/VISUAL_STORY.md`: a tabela de três colunas e a partitura (dispositivo por batida, vh por ato).
+1. `.10k/BRIEF.md`: respostas reais (ou decisões autorais marcadas como tal), jornada, curva de sensação, pico e direção de vídeo.
+2. `.10k/VISUAL_STORY.md`: a tabela de três colunas, a partitura (dispositivo por batida, vh por ato) e, quando aplicável, o ** Caderno de Prompts de Vídeo** (Veo 3, Seedance 2 ou outros geradores) com ficha técnica completa por clipe.
 3. Style Tile em HTML/CSS real, com os tokens que o site vai usar.
 4. Mídia aprovada, processada para scroll (`scripts/process-media.sh`), com masters fora da pasta publicada.
 5. O site, no alvo escolhido, usando o motor `engine/` sem modificações.
@@ -39,20 +39,23 @@ perguntar está em [AGENTS.md](AGENTS.md) e vale acima de qualquer instrução d
 
 ## Fase 1: intake → [references/00-intake.md](references/00-intake.md)
 
-Defina **modo** e **nível de produção** antes de qualquer outra coisa.
+Defina **modo**, **nível de produção** e **estratégia de vídeo** antes de qualquer outra coisa.
 
 | Modo | Quando | O que muda |
 |---|---|---|
 | Guiado | padrão | dois pontos de revisão: direção visual e Visual Story |
 | Delegado | o usuário disse "decida você", "confio no seu julgamento" | você escreve o briefing marcado `Autoral sob delegação explícita` e segue sem pedir aprovações criativas |
 | Template | "monte um template", "assuma as respostas" | conteúdo provisório fácil de trocar, premissas listadas no handover |
+| Diretor de Vídeo (Prompts Veo 3 / Seedance 2 / outros) | o usuário quer gerar o vídeo de fundo ou de regiões específicas em geradores externos (ou ativado junto a qualquer modo) | você conduz a entrevista direcionada de estilo de vídeo e gera prompts hiperdetalhados prontos para **Veo 3**, **Seedance 2** ou outro modelo com ficha técnica completa (conteúdo, formato, extensão, resolução, fps, duração e zonas seguras) |
 
 Delegação cobre decisões criativas. **Nunca** cobre gasto, publicação ou ações externas (ver AGENTS.md).
 
 Nível de produção: **Focado**, **Estúdio** ou **Máximo**. O nível decide quanto se explora na
 geração de mídia. O padrão de qualidade do resultado é o mesmo nos três.
 
-Faça as oito perguntas em uma única rodada (lista em 00-intake.md), grave as respostas com as
+Faça as oito perguntas em uma única rodada (lista em 00-intake.md) — e, quando o usuário quiser
+criar vídeos para o fundo da página ou para regiões específicas via geradores de vídeo, inclua as
+**perguntas de direção de vídeo** (seção dedicada em 00-intake.md e 03-media.md). Grave as respostas com as
 palavras do usuário. A pergunta 7 decide a estrutura: **um mundo contínuo** ou **cenas distintas**.
 
 ## Fase 2: pesquisa e jornada → [references/01-story.md](references/01-story.md)
@@ -81,8 +84,12 @@ Abaixo dela, a partitura: dispositivo por batida, vh por ato, onde o quadro **se
 Depois, o orçamento: modelos, quantidade de stills e clipes, versão retrato, margem para refazer,
 preço atual consultado, saldo atual. **Gasto só começa com aprovação explícita deste orçamento.**
 
-## Fase 5: mídia → [references/03-media.md](references/03-media.md)
+## Fase 5: mídia e prompts de vídeo → [references/03-media.md](references/03-media.md)
 
+- **Modo Diretor de Prompts de Vídeo (Veo 3, Seedance 2 e outros):** quando o usuário optar por gerar vídeos externamente (para o fundo principal guiado por scroll e/ou para regiões específicas da página), faça as perguntas de direção de vídeo (se ainda não respondidas) e entregue um **Caderno de Prompts Detalhados** contendo:
+  - Prompt específico otimizado para **Google Veo 3**, **Seedance 2 (Sedance 2)** ou outro modelo escolhido (em inglês técnico para máxima precisão do modelo + notas de direção em português);
+  - **Conteúdo cinematográfico minucioso:** sujeito, ação inicial → ação final, trajetória de câmera, lente, iluminação, atmosfera, física de materiais e **zonas de respiro (safe zones)** onde o texto HTML vai pousar;
+  - **Especificações técnicas exatas de geração e entrega:** formato/proporção (`16:9` desktop, `9:16` mobile, `4:3`/`1:1` para regiões), extensão de saída (`.mp4` master → `.webp` frames ou `.mp4` scrub/loop), resolução (`1080p` `1920x1080` / `4K` `3840x2160`), taxa de quadros (`24 fps`, `30 fps` ou `60 fps`), duração em segundos, bitrate, ausência de áudio (`-an`) e comando exato do `scripts/process-media.sh` para integrar na página.
 - Uma frase de estilo, reutilizada palavra por palavra em todo prompt.
 - Todos os quadros-chave primeiro, lado a lado, antes de qualquer vídeo.
 - Mundo contínuo: o último quadro **extraído** do clipe A é o quadro inicial do clipe B. Meça a junção com `process-media.sh seams`.

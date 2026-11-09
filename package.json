@@ -1,9 +1,9 @@
 {
-  "name": "10k-unified-web-skill",
+  "name": "scroll-web-skills",
   "version": "0.1.0",
   "description": "Unified agent skill and harness for cinematic scroll-driven websites: brief, story, media, engine, QA and handover.",
   "bin": {
-    "10k-unified-web-skill": "bin/cli.mjs"
+    "scroll-web-skills": "bin/cli.mjs"
   },
   "files": [
     "bin/",

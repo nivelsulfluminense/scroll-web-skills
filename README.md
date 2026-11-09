@@ -1,4 +1,4 @@
-# 10K Unified Web Skill
+# Scroll Web Skills
 
 Skill e harness para agentes de IA construírem sites cinematográficos guiados por scroll, do briefing à entrega,
 unificando o melhor de seis projetos abertos sem contradições entre eles.
@@ -11,17 +11,17 @@ unificando o melhor de seis projetos abertos sem contradições entre eles.
 ## Estrutura
 
 ```
-10k-unified-web-skill/
+scroll-web-skills/
 ├── SKILL.md                     roteiro em 10 fases; entra no contexto do agente
 ├── AGENTS.md                    contrato: LIVRE / PERGUNTE / PROIBIDO, zonas de arquivo, portões
 ├── CLAUDE.md                    configuração por projeto (alvo, backend, yolo off) + atalhos
 ├── bin/cli.mjs                  instalador npx sem dependências: install, init, where, uninstall, doctor
 ├── dist/tk-stage.js|css         motor pré-compilado para sites estáticos (versionado)
 ├── references/                  uma por fase, lida só quando a fase chega
-│   ├── 00-intake.md             modos, nível de produção, as 8 perguntas
+│   ├── 00-intake.md             modos, nível de produção, as 8 perguntas + direção de vídeo (Veo 3 / Seedance 2)
 │   ├── 01-story.md              pesquisa, jornada, curva de sensação, pico, pausas
 │   ├── 02-design.md             gramáticas, assinatura, impressão digital, Style Tile
-│   ├── 03-media.md              contrato de provedor, continuidade, junções, quadros × vídeo
+│   ├── 03-media.md              prompts detalhados (Veo 3, Seedance 2, outros), contrato de provedor, continuidade, quadros × vídeo
 │   ├── 04-engine.md             API e contrato de markup do motor
 │   ├── 05-motion-kit.md         dispositivos, Kinesis, herói em camadas, planejados
 │   ├── 06-mobile.md             recorte × retrato, composição, peso
@@ -63,38 +63,38 @@ node scripts/qa-audit.ts --url http://127.0.0.1:4600 --browsers chromium,webkit
 
 ## Instalar
 
-Substitua `OWNER` pelo seu usuário ou organização no GitHub. Requer Node 18+ e git; as ferramentas da skill pedem Node 22.18+.
+Substitua `OWNER` pelo seu usuário ou organização no GitHub (ex.: `nivelsulfluminense`). Requer Node 18+ e git; as ferramentas da skill pedem Node 22.18+.
 
 ```bash
 # Claude Code, global (padrão)
-npx github:OWNER/10k-unified-web-skill install
+npx github:OWNER/scroll-web-skills install
 
 # todos os agentes: Claude Code, Codex, Cursor, Gemini CLI, OpenCode
-npx github:OWNER/10k-unified-web-skill install --agent all
+npx github:OWNER/scroll-web-skills install --agent all
 
 # só neste projeto (.claude/skills e .agents/skills)
-npx github:OWNER/10k-unified-web-skill install --agent claude,codex --project
+npx github:OWNER/scroll-web-skills install --agent claude,codex --project
 
 # preparar um projeto de site: AGENTS.md, CLAUDE.md, .10k/, motor, (Lovable: supabase/)
-npx github:OWNER/10k-unified-web-skill init                 # detecta static | react | lovable
-npx github:OWNER/10k-unified-web-skill init --target lovable
+npx github:OWNER/scroll-web-skills init                 # detecta static | react | lovable
+npx github:OWNER/scroll-web-skills init --target lovable
 
 # atualizar, conferir, remover
-npx github:OWNER/10k-unified-web-skill install --force
-npx github:OWNER/10k-unified-web-skill where --agent all
-npx github:OWNER/10k-unified-web-skill uninstall --agent all
+npx github:OWNER/scroll-web-skills install --force
+npx github:OWNER/scroll-web-skills where --agent all
+npx github:OWNER/scroll-web-skills uninstall --agent all
 ```
 
 Toda operação aceita `--dry-run`. O `init` nunca sobrescreve arquivo existente sem `--force`
 (um `CLAUDE.md` seu é mantido).
 
-Alternativa pelo instalador aberto de skills (Node 22.20+): `npx skills add OWNER/10k-unified-web-skill`.
+Alternativa pelo instalador aberto de skills (Node 22.20+): `npx skills add OWNER/scroll-web-skills`.
 Ele copia o repositório inteiro, inclusive testes e evidências; o CLI acima copia só o que o agente usa.
 
-**claude.ai:** compacte a pasta instalada (`~/.claude/skills/10k-unified-web-skill`) e envie em
+**claude.ai:** compacte a pasta instalada (`~/.claude/skills/scroll-web-skills`) e envie em
 Configurações → Capabilities → Skills.
 
-Publicar no npm (opcional) permite `npx 10k-unified-web-skill install`: `npm publish` a partir da raiz.
+Publicar no npm (opcional) permite `npx scroll-web-skills install`: `npm publish` a partir da raiz.
 Confira antes com `npm pack --dry-run` o que vai no pacote.
 
 ## Requisitos

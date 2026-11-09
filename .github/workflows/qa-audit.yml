@@ -26,7 +26,7 @@ jobs:
           export HOME=$(mktemp -d)
           node bin/cli.mjs install --agent all
           ! node bin/cli.mjs where --agent all | grep -q BROKEN
-          test -f "$HOME/.claude/skills/10k-unified-web-skill/references/04-engine.md"
+          test -f "$HOME/.claude/skills/scroll-web-skills/references/04-engine.md"
           for t in static react lovable; do d=$(mktemp -d); (cd "$d" && node "$GITHUB_WORKSPACE/bin/cli.mjs" init --target $t); done
       - run: npm run typecheck
       - run: npm test

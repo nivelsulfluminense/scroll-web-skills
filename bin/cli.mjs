@@ -1,6 +1,6 @@
 #!/usr/bin/env node
-// 10k-unified-web-skill CLI. Zero dependencies: runs straight from GitHub with
-//   npx github:OWNER/10k-unified-web-skill <command>
+// scroll-web-skills CLI. Zero dependencies: runs straight from GitHub with
+//   npx github:OWNER/scroll-web-skills <command>
 //
 //   install   [--agent claude|codex|cursor|gemini|opencode|all] [--global | --project] [--force] [--dry-run]
 //   init      [dir] [--target static|react|lovable] [--force] [--dry-run]
@@ -14,7 +14,7 @@ import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 const PKG_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const SKILL_NAME = "10k-unified-web-skill";
+const SKILL_NAME = "scroll-web-skills";
 const VERSION = JSON.parse(fs.readFileSync(path.join(PKG_ROOT, "package.json"), "utf8")).version;
 
 // What an agent needs to read and run the skill. Tests, CI and evidence stay in the repo.
@@ -129,7 +129,7 @@ function install() {
     log(`${DRY ? "[dry-run] would install" : "installed"} ${SKILL_NAME} v${VERSION} (${files} files) for ${agents.join(", ")} → ${dir}`);
   }
   log("\nStart a new agent session so the skill is picked up.");
-  log("Inside a website project, run:  npx github:<owner>/10k-unified-web-skill init");
+  log("Inside a website project, run:  npx github:<owner>/scroll-web-skills init");
 }
 
 function uninstall() {
@@ -200,7 +200,7 @@ function init() {
   if (target === "static") log("  site/ has tk-stage.js and tk-stage.css; the markup contract is in .10k/references/04-engine.md");
   else log("  import \"./lib/tk-stage/stage.css\" once in your root layout");
   if (target === "lovable") log("  Lovable: read .10k/references/07-targets.md before pushing to main. Migrations and edge functions need approved Lovable prompts.");
-  log("  Ask your agent: \"use a 10k-unified-web-skill e comece pelo intake\"");
+  log("  Ask your agent: \"use a scroll-web-skills e comece pelo intake\"");
 }
 
 function detectTarget(root) {
@@ -217,7 +217,7 @@ function appendLines(file, lines, created) {
   const current = fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
   const missing = lines.filter((l) => !current.split("\n").includes(l));
   if (!missing.length) return;
-  if (!DRY) fs.writeFileSync(file, `${current}${current && !current.endsWith("\n") ? "\n" : ""}# 10k-unified-web-skill\n${missing.join("\n")}\n`);
+  if (!DRY) fs.writeFileSync(file, `${current}${current && !current.endsWith("\n") ? "\n" : ""}# scroll-web-skills\n${missing.join("\n")}\n`);
   created.push(`${file} (+${missing.length} lines)`);
 }
 

@@ -8,7 +8,8 @@ next_action: ""
 mode: guided             # guided | delegated | template
 production_level: studio # focused | studio | max
 target: static           # static | react | lovable
-media_provider: none
+media_provider: prompt-pack # prompt-pack (Veo 3 / Seedance 2 / outros) | none | openart | higgsfield | kie | other
+video_generator: veo3    # veo3 | seedance2 | kling | runway | sora | other
 budget_approved: null    # valor e data, ou null
 spent: 0
 publish_authorized: false
